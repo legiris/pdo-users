@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family:Times;
+	font-size: 18px;
+}
+
+h2 {
+	font-family:Verdana;
+	font-size:20px;
+}
+
+h3 {
+	font-family:Verdana;
+	font-size:15px;
+}
+
+.container {
+	width: 700px;
+	text-align: justify;
+	margin-right: auto;
+	margin-left: auto;
+	*zoom: 1;
+}
