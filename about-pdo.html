@@ -45,7 +45,7 @@ s sebou přineslo PHP 5.1.
 <h3>Úprava jednotlivých funkci</h3>    
     <p>Na stránkách <a href="http://php.net/manual/en/book.pdo.php" title="PDO manual">http://php.net/manual/en/book.pdo.php</a> je k dispozici PDO manuál,
     se kterým je nutné se postupně seznámit. Jako první si můžeme přepsat funkci pro výběr všech uživatelů. Využijeme k tomu PDO funkci <i>fetchAll()</i>,
-    která nám vrátí pole všech uživatelů. Pokud jí ovšem předáme parametr <i>PDO::FETCH_CLASS</i> dostaneme přímo pole se všemi instancemi uživatelů.
+    která nám vrátí pole všech uživatelů. Pokud jí ovšem předáme parametr <i>PDO::FETCH_CLASS</i>, dostaneme přímo pole se všemi instancemi uživatelů.
     </p>
     
     <img src="fetchAll.jpg" />
@@ -70,6 +70,8 @@ s sebou přineslo PHP 5.1.
     opakovaně prováděla analýza, kompilace dotazu a celkově můžeme lépe optimalizovat běh aplikace. Další podstatnou výhodou je zabezpečení
     proti SQL injections.
     </p>
+    
+    <p><a href="https://github.com/legiris/pdo-users" title="Repozitář se zdrojovým kódem">Odkaz na repozitář se zdrojovým kódem aplikace</a></p>
     
     
 </div>		<!-- /container -->    
