@@ -15,19 +15,21 @@ s sebou přineslo PHP 5.1.
 <h3>Proč PDO?</h3>
 <p>Zde máme aspoň základní přehled toho, co nám PDO nabízí:</p>
 <ul>
+	<li>optimalizace výkonu aplikace,</li>
+	<li>zabezpečení proti SQL injections,</li>
+	<li>oproti klasickému SQL nám ušetří nějaký ten čas,</li>
+	<li>zvýšení čitelnosti kódu,</li>
 	<li>jednotné rozhraní &#8211; 12 databázových ovladačů (vedle MySQL např. Cubrid, Firebird, PostgreSQL, SQLite 3,
 	ODBC a další). Přehled je k dispozici zde:<br /> <a href="http://www.php.net/manual/en/pdo.drivers.php" title="PDO drivers">
 	http://www.php.net/manual/en/pdo.drivers.php</a>,</li>
 	<li>objektově orientované rozhraní (object-oriented API),</li>
-	<li>pojmenované vazby, kdy každý placeholder má přiřazené jméno (např. <i>firstname</i>), toho využijeme při vázání parametrů v dotazu,</li>
-	<li>oproti klasickému MySQL &#8211; čas,</li>
-	<li>čitelnost kódu</li>
+	<li>pojmenované vazby, kdy každý placeholder má přiřazené jméno (např. <i>firstname</i>), toho využijeme při vázání parametrů v dotazu.</li>
 </ul>
 
 <h3>Implementace PDO</h3>
     <p>Nyní se vrátíme k předchozímu příkladu, který si upravíme tak, abychom využili PDO rozhraní. Pro to, abychom dále
     oddělili logiku aplikace, si vytvoříme novou třídu, kterou si nazveme jako <i>AbstractModel.php</i> a do které umístíme
-    základní operace prováděné nad databází. Funkce <i>getConnection()</i> nám nyní zprostředkuje samotné připojení k databázi a zároveň
+    základní operace prováděné nad databází. Funkce <i>connect()</i> nám nyní zprostředkuje samotné připojení k databázi a zároveň
     si na jejím příkladě ukážeme použití statické metody.
     </p>
 
@@ -37,7 +39,7 @@ s sebou přineslo PHP 5.1.
 	konkrétní instanci (nevytváříme žádnou instanci). Z toho vyplývá, že by statické metody měly obsahovat to, co je charakteristické pro celou třídu, ne pro její instance.
 	Proto se pro přístup ke statickým metodám a atributům nebudeme odkazovat
 	na "tento objekt" (neboť neexistuje), nepoužijeme tedy <i>$this</i>, protože se neváže k instanci, ale pro přístup ve vlastní třídě musíme použít <i>self::</i>
-	a pro přístup do rodičovských tříd <i>parent::</i>. Zvenku pak ke statickým metodám přistupujeme pomocí dvojtečkové notace např. <i>AbstractModel::getConnection();</i>.
+	a pro přístup do rodičovských tříd <i>parent::</i>. Zvenku pak ke statickým metodám přistupujeme pomocí dvojtečkové notace např. <i>AbstractModel::connect();</i>.
 	</p>
     
 <h3>Úprava jednotlivých funkci</h3>    
@@ -50,6 +52,24 @@ s sebou přineslo PHP 5.1.
     
     <p>Vzhledem k tomu, že ve třídě <i>UserManager.php</i> přistupujeme k databázi přes statickou proměnnou <i>self::database</i>, potřebujeme
     tuto třídu rozšířit také o <i>AbstractModel.php</i>, abychom měli k dispozici připojení k databázi.
+    </p>
+    
+    <p>
+    Na funkci <i>save()</i> si blíže ukážeme zpracování PDO dotazu. Funkce <i>prepare()</i> očekává SQL dotaz, na který můžeme navázat parametry.
+    To lze udělat přes zápis <i>":název parametru"</i> nebo pro vložení parametru můžeme využít placeholder a vložit zástupný znak <i>"?"</i>. Pro zvýšení čitelnosti kódu
+    doporučuji používat první způsob, tedy pojmenované parametry. Funkce <i>execute()</i> pak provede takto předpřipravený dotaz. Pokud jsme
+    v dotazu použili parametr, musíme jej také nějakým způsobem předat. To provedeme pomocí navázání parametrů, kdy funkci <i>execute()</i> předáme
+    rovnou pole s jednotlivými parametry nebo nejprve využijeme funkci <i>bindParam()</i>.
+    </p>
+    
+    <img src="save.jpg" />
+    
+    <p>
+    Používání předpřipravených dotazů nám přináší několik výhod. Jednou z nich je to, že analýza samotného dotazu se bude provádět pouze jednou, takže
+    stejný dotaz můžeme provést několikrát se stejnými nebo různými parametry. Pomocí předpřipravených dotazů tak můžeme zabránit tomu, aby se
+    opakovaně prováděla analýza, kompilace dotazu a celkově můžeme lépe optimalizovat běh aplikace. Další podstatnou výhodou je zabezpečení
+    proti SQL injections.
+    </p>
     
     
 </div>		<!-- /container -->    

@@ -28,13 +28,5 @@ class AbstractModel
 		}	
 	}
 
-	/**
-	 * nastaveni znakove sady
-	 * @param string $characterSet
-	 */
-	public static function setCharacter($characterSet)
-	{
-		self::$database->query('SET CHARACTER SET '. $characterSet);
-	}		
 	
 }

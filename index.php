@@ -14,13 +14,6 @@ AbstractModel::connect(array(
 ));
 AbstractModel::setDebug(true);
 
-/*
-$connect = mysql_connect('localhost', 'root', '');
-if (!$connect) {
-    die('Could not connect: ' . mysql_error());
-}
-mysql_select_db('test');
-*/
 
 // inicializace manazera uzivatelu
 $users = new UserManager();
