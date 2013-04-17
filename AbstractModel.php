@@ -7,6 +7,7 @@ class AbstractModel
 	
 	/**
 	 * pripojeni k databazi
+	 * @param array $options
 	 */
 	public static function connect($options)
 	{	
