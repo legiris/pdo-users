@@ -12,7 +12,8 @@ class AbstractModel
 	public static function connect($options)
 	{	
 		if (!self::$database) {
-			self::$database = new PDO('mysql:host=' . $options['host'] . ';dbname=' . $options['dbname'] . '', $options['username'], $options['password']);
+			self::$database = new PDO('mysql:host=' . $options['host'] . ';dbname=' . $options['dbname'] . '',
+							           $options['username'], $options['password']);
 			self::$database->exec('SET CHARACTER SET ' . $options['charset']);
 		}
 		return self::$database;			
